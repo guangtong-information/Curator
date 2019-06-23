@@ -3,14 +3,16 @@ package com.ypy.curator.masterselect;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.recipes.leader.LeaderSelector;
+import org.apache.curator.framework.recipes.leader.LeaderSelectorListener;
 import org.apache.curator.framework.recipes.leader.LeaderSelectorListenerAdapter;
+import org.apache.curator.framework.state.ConnectionState;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 
 /**
  * 08 Master选举
  *
  * 场景：
- * 在愤怒时系统中，经常会碰到这样的场景：对于一个复杂的任务，仅需要在集群中选举出一台服务器处理即可，诸如此类的分布式问题，我们称之为“master选举”。
+ * 在分布式系统中，经常会碰到这样的场景：对于一个复杂的任务，仅需要在集群中选举出一台服务器处理即可，诸如此类的分布式问题，我们称之为“master选举”。
  * 借助zk，我们可以轻松的实现master选举的功能。
  *
  * 选举的大体思路：
@@ -40,17 +42,29 @@ public class MasterSelect {
          * Curatro使用LeaderSelector封装了所有和master选举相关的逻辑（节点创建、事件监听、自动选举过程等）
          * takeLeadership在获取master权利以后，会立刻释放master权利
          */
-        LeaderSelector selector = new LeaderSelector(client, master_path, new LeaderSelectorListenerAdapter() {
+        /*LeaderSelector selector = new LeaderSelector(client, master_path, new LeaderSelectorListenerAdapter() {
             public void takeLeadership(CuratorFramework client) throws Exception {
                 System.out.println("成为Master角色");
                 Thread.sleep(3000);
                 System.out.println("完成Master操作，释放Master权利");
             }
-        });
+        });*/
+
+        LeaderSelector selector = new LeaderSelector(client,master_path, new MyLeaderSelectorListener());
+
         // 开启选举
         selector.autoRequeue();
         selector.start();
         Thread.sleep(Integer.MAX_VALUE);
     }
 
+}
+
+class MyLeaderSelectorListener extends LeaderSelectorListenerAdapter{
+    @Override
+    public void takeLeadership(CuratorFramework client) throws Exception {
+        System.out.println("成为Master角色");
+        Thread.sleep(3000);
+        System.out.println("完成Master操作，释放Master权利");
+    }
 }
