@@ -32,7 +32,7 @@ public class NoLock2 {
         // 第一步：创建一个国定线程数据的线程池
         ExecutorService executorService  = Executors.newFixedThreadPool(10);
         // 第二步：同时去生成订单号
-        for (int i=0; i<30; i++) {
+        for (int i=0; i<5; i++) {
             executorService.submit(new GenOrderNum(down,lock));
         }
         down.countDown();
