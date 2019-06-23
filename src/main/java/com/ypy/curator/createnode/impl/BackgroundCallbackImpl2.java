@@ -1,4 +1,4 @@
-package com.ypy.curator.createnode;
+package com.ypy.curator.createnode.impl;
 
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.api.BackgroundCallback;
