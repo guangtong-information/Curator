@@ -19,6 +19,7 @@
             <version>${curator.version}</version>
         </dependency>
 
+        <!--curator对典型案例的封装，例如选举、分布式锁等-->
         <dependency>
             <groupId>org.apache.curator</groupId>
             <artifactId>curator-recipes</artifactId>
