@@ -28,15 +28,23 @@ public class Setdata {
         // 强制使用指定版本，更新节点数据内容
         curatorFramework.setData().withVersion(stat.getVersion()).forPath(path,"init-new".getBytes());
 
-        System.out.println(new String(curatorFramework.getData().forPath(path)));
+        System.out.println("v:" + stat.getVersion());
+
+//        Stat stat1 = new Stat();
+
+//        System.out.println(new String(curatorFramework.getData().storingStatIn(stat1).forPath(path)));
+
+//        System.out.println("v1:" + stat1.getVersion());
 
         // 默认使用最新的版本，更新节点数据内容
-        curatorFramework.setData().forPath(path,"init-new-1".getBytes());
+//        curatorFramework.setData().forPath(path,"init-new-1".getBytes());
 
-        System.out.println(new String(curatorFramework.getData().forPath(path)));
+//        curatorFramework.setData().withVersion(stat1.getVersion()).forPath(path,"init-new-1".getBytes());
+
+//        System.out.println(new String(curatorFramework.getData().forPath(path)));
 
         // 注意：不能使用过期节点状态，强制更新节点数据！
-        curatorFramework.setData().withVersion(stat.getVersion()).forPath(path,"init-new-2".getBytes());
+//        curatorFramework.setData().withVersion(stat.getVersion()).forPath(path,"init-new-2".getBytes());
 
     }
 

@@ -19,7 +19,7 @@ public class CheckExists {
 
         curatorFramework.start();
 
-//        curatorFramework.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL).forPath(path,"init".getBytes());
+        curatorFramework.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL).forPath(path,"init".getBytes());
 
         Stat stat = curatorFramework.checkExists().forPath(path);
 

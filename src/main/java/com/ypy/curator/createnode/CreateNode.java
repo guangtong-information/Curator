@@ -11,7 +11,7 @@ import org.apache.zookeeper.CreateMode;
 public class CreateNode {
 
     public static void main(String[] args) throws Exception{
-        String path = "/zk-book/c1";
+        String path = "/zk-book/c1/c2";
 
         CuratorFramework client = CuratorFrameworkFactory.builder()
                 .connectString("127.0.0.1:2181")
